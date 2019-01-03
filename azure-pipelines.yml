@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'win1803'
+  vmImage: 'ubuntu-16.04'
 
 steps:
 - task: Maven@3
@@ -20,3 +20,8 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'clean package'
+- task: AzureRmWebAppDeployment@3
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise'
+    WebAppName: 'ServiceMicro'
+    Package: '$(System.DefaultWorkingDirectory)/**/*.war'
